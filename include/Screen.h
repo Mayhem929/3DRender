@@ -9,6 +9,7 @@
 #include "Vector3D.h"
 #include "Line3D.h"
 #include "Prism.h"
+#include "Sphere.h"
 #include "Space.h"
 
 #define DIM 100
@@ -29,6 +30,7 @@ public:
 
     void setPos(Point3D);
     void updateScreen(Prism);
+    void updateScreen(Sphere);
     void updateScreen(Space);
     void show();
 

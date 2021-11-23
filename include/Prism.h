@@ -29,8 +29,6 @@ public:
     Point3D& getRt();
 
     char HitBoundingBox(float origin[NUMDIM],float dir[NUMDIM], float coord[NUMDIM]);
-    char HitBoundingBox(Point3D origin,Point3D dir, Point3D coord);
-
 };
 
 

@@ -1,6 +1,5 @@
 //
 // Created by Adrián Jaén on 20/11/2021.
-//
 
 #include "../include/Point3D.h"
 #include "cmath"

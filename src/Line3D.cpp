@@ -4,6 +4,7 @@
 
 #include "../include/Line3D.h"
 #include "cmath"
+#include "iostream"
 
 Line3D::Line3D() {
     orig=Point3D();
@@ -23,7 +24,7 @@ Vector3D& Line3D::getDir() {return dir;}
 void Line3D::setOrig(Point3D point) {orig = point;}
 
 void Line3D::setDir(Point3D point) {
-    dir.set(Vector3D(point.getX(), point.getY(), point.getZ()));
+    dir.set(Vector3D(point[0], point[1], point[2]));
 }
 
 bool Line3D::contains(Point3D p3) {

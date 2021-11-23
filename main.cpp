@@ -1,5 +1,4 @@
 #include "include/Screen.h"
-#include "include/Space.h"
 #include "iostream"
 
 int main() {
@@ -30,14 +29,19 @@ int main() {
     prism = Prism(lb, rt);
     space.addPrism(prism);
 
+    Sphere sphere(Point3D(4,0,0), 1);
+
     screen.updateScreen(space);
+    screen.updateScreen(sphere);
     screen.show();
+
 
     bool go_on = true;
 
     Point3D pos(0,0,0);
 
     while(go_on){
+
         char option;
         std::cin >> option;
 
@@ -45,13 +49,15 @@ int main() {
             pos.setY(pos.getY()+1);
             screen.setPos(pos);
             screen.updateScreen(space);
+            screen.updateScreen(sphere);
             screen.show();
         }
 
         if (option == 's'){
-            pos.setZ(pos.getZ()-1);
+            pos.setX(pos.getX()-1);
             screen.setPos(pos);
             screen.updateScreen(space);
+            screen.updateScreen(sphere);
             screen.show();
         }
 
@@ -59,13 +65,31 @@ int main() {
             pos.setY(pos.getY()-1);
             screen.setPos(pos);
             screen.updateScreen(space);
+            screen.updateScreen(sphere);
             screen.show();
         }
 
         if (option == 'w'){
+            pos.setX(pos.getX()+1);
+            screen.setPos(pos);
+            screen.updateScreen(space);
+            screen.updateScreen(sphere);
+            screen.show();
+        }
+
+        if (option == 'f'){
             pos.setZ(pos.getZ()+1);
             screen.setPos(pos);
             screen.updateScreen(space);
+            screen.updateScreen(sphere);
+            screen.show();
+        }
+
+        if (option == 'c'){
+            pos.setZ(pos.getZ()-1);
+            screen.setPos(pos);
+            screen.updateScreen(space);
+            screen.updateScreen(sphere);
             screen.show();
         }
 
@@ -74,9 +98,6 @@ int main() {
         }
 
     }
-
-
-
 
     return 0;
 }

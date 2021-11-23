@@ -10,9 +10,7 @@
 
 class Vector3D {
 private:
-    float x;
-    float y;
-    float z;
+    float v[3]{};
 
 public:
 
@@ -29,6 +27,10 @@ public:
     Vector3D(float, float, float);
     void normalize();
     void ridZeros();
+
+    float& operator[](int i);
+    Vector3D operator*(float num);
+    Vector3D& operator*=(float num);
 };
 
 

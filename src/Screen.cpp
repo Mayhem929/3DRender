@@ -27,7 +27,7 @@ void Screen::CleanMatrix(){
 
 void Screen::show() {
 
-    system("CLS");
+    system("clear");
 
     string output = "";
 
@@ -43,36 +43,56 @@ void Screen::show() {
 
 void Screen::updateScreen(Prism prism) {
 
-        float x0 = position.getX();
-        float y0 = position.getY() - screenLen / 2.f;
-        float z0 = position.getZ() - screenLen / 2.f;
+    float x0 = position.getX();
+    float y0 = position.getY() - screenLen / 2.f;
+    float z0 = position.getZ() - screenLen / 2.f;
 
-        for (int i = 0; i < DIM; ++i) {
-            for (int j = 0; j < DIM; ++j) {
-                Line3D line(position, Point3D(position.getX() + 1, y0 + screenLen * j / DIM, z0 + screenLen * i / DIM));
-                Vector3D direc = line.getDir();
-                float orig[3] = {position[0], position[1], position[2]};
-                float dir[3] = {direc.getX(), direc.getY(), direc.getZ()};
-                float coord[3] = {0};
+    for (int i = 0; i < DIM; ++i) {
+        for (int j = 0; j < DIM; ++j) {
+            Line3D line(position, Point3D(position.getX() + 1, y0 + screenLen * j / DIM, z0 + screenLen * i / DIM));
+            Vector3D direc = line.getDir();
+            float orig[3] = {position[0], position[1], position[2]};
+            float dir[3] = {direc.getX(), direc.getY(), direc.getZ()};
+            float coord[3] = {0};
 
-                if (prism.HitBoundingBox(orig, dir, coord)) {
+            if (prism.HitBoundingBox(orig, dir, coord)) {
 
-                    if (coord[0] == prism.getRt().getX())
-                        matrix[i][j] = '@';
-                    else if (coord[1] == prism.getRt().getY())
-                        matrix[i][j] = '-';
-                    else if (coord[2] == prism.getRt().getZ())
-                        matrix[i][j] = ':';
-                    else if (coord[0] == prism.getLb().getX())
-                        matrix[i][j] = '*';
-                    else if (coord[1] == prism.getLb().getY())
-                        matrix[i][j] = '/';
-                    else if (coord[2] == prism.getLb().getZ())
-                        matrix[i][j] = '+';
-                }
+                if (coord[0] == prism.getRt().getX())
+                    matrix[i][j] = '@';
+                else if (coord[1] == prism.getRt().getY())
+                    matrix[i][j] = '-';
+                else if (coord[2] == prism.getRt().getZ())
+                    matrix[i][j] = ':';
+                else if (coord[0] == prism.getLb().getX())
+                    matrix[i][j] = '*';
+                else if (coord[1] == prism.getLb().getY())
+                    matrix[i][j] = '/';
+                else if (coord[2] == prism.getLb().getZ())
+                    matrix[i][j] = '+';
             }
         }
+    }
+}
 
+void Screen::updateScreen(Sphere sphere) {
+
+    float x0 = position.getX();
+    float y0 = position.getY() - screenLen / 2.f;
+    float z0 = position.getZ() - screenLen / 2.f;
+
+    for (int i = 0; i < DIM; ++i) {
+        for (int j = 0; j < DIM; ++j) {
+            Line3D line(position, Point3D(position.getX() + 1, y0 + screenLen * j / DIM, z0 + screenLen * i / DIM));
+            Vector3D direc = line.getDir();
+            float orig[3] = {position[0], position[1], position[2]};
+            float dir[3] = {direc.getX(), direc.getY(), direc.getZ()};
+            Point3D coord;
+
+            if (sphere.HitSphere(line, coord)){
+                matrix[i][j] = '*';
+            }
+        }
+    }
 }
 
 void Screen::setPos(Point3D p) {
