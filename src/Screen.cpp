@@ -5,6 +5,14 @@
 #include "../include/Screen.h"
 #include "iostream"
 
+#ifdef _WIN32
+#define COMMAND "CLS"
+#endif
+
+#ifdef linux
+#define COMMAND "clear"
+#endif
+
 using namespace std;
 
 Screen::Screen() {
@@ -27,7 +35,7 @@ void Screen::CleanMatrix(){
 
 void Screen::show() {
 
-    system("clear");
+    system(COMMAND);
 
     string output = "";
 
@@ -38,7 +46,22 @@ void Screen::show() {
         output+="\n";
     }
 
+    output += "pos: "+to_string(position[0])+", "+to_string(position[1])+", "+to_string(position[2])+"\n"+
+            "rotation: " + to_string(rotationY) + ", " + to_string(rotationZ) + "\n";
+
     cout << output;
+
+
+}
+
+void Screen::applyAngle(Point3D &p){
+    p.set(position[0] + (p[0]-position[0])*cos(rotationY) - (p[1]-position[1])*sin(rotationY),
+          position[1] + (p[0]-position[0])*sin(rotationY) + (p[1]-position[1])*cos(rotationY),
+          p[2]);
+
+    p.set(position[0] + (p[0]-position[0])*cos(rotationZ) - (p[2]-position[2])*sin(rotationZ),
+          p[1],
+          position[2] + (p[0]-position[0])*sin(rotationZ) + (p[2]-position[2])*cos(rotationZ));
 }
 
 void Screen::updateScreen(Prism prism) {
@@ -49,7 +72,9 @@ void Screen::updateScreen(Prism prism) {
 
     for (int i = 0; i < DIM; ++i) {
         for (int j = 0; j < DIM; ++j) {
-            Line3D line(position, Point3D(position.getX() + 1, y0 + screenLen * j / DIM, z0 + screenLen * i / DIM));
+            Point3D screen_point(position.getX() + 1, y0 + screenLen * j / DIM, z0 + screenLen * i / DIM);
+            applyAngle(screen_point);
+            Line3D line(position, screen_point);
             Vector3D direc = line.getDir();
             float orig[3] = {position[0], position[1], position[2]};
             float dir[3] = {direc.getX(), direc.getY(), direc.getZ()};
@@ -58,7 +83,7 @@ void Screen::updateScreen(Prism prism) {
             if (prism.HitBoundingBox(orig, dir, coord)) {
 
                 if (coord[0] == prism.getRt().getX())
-                    matrix[i][j] = '@';
+                    matrix[i][j] = '!';
                 else if (coord[1] == prism.getRt().getY())
                     matrix[i][j] = '-';
                 else if (coord[2] == prism.getRt().getZ())
@@ -73,6 +98,8 @@ void Screen::updateScreen(Prism prism) {
         }
     }
 }
+
+
 
 void Screen::updateScreen(Sphere sphere) {
 
@@ -115,4 +142,21 @@ void Screen::updateScreen(Space sp) {
     for (int i = 0; i < space.getUsed(); ++i) {
         updateScreen(space[i]);
     }
+}
+
+float Screen::getRotationY(){
+    return rotationY;
+}
+
+
+float Screen::getRotationZ(){
+    return rotationZ;
+}
+
+void Screen::setRotationY(float angle) {
+    rotationY = angle;
+}
+
+void Screen::setRotationZ(float angle) {
+    rotationZ = angle;
 }

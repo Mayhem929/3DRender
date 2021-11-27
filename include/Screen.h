@@ -20,6 +20,8 @@ private:
     Space space;
     Point3D position{0,0,0};
     float screenLen = 2;
+    float rotationY = 0;
+    float rotationZ = 0;
 public:
 
     Screen();
@@ -30,9 +32,18 @@ public:
 
     void setPos(Point3D);
     void updateScreen(Prism);
+
     void updateScreen(Sphere);
     void updateScreen(Space);
     void show();
+
+    void applyAngle(Point3D &p);
+
+    float getRotationY();
+    float getRotationZ();
+
+    void setRotationY(float angle);
+    void setRotationZ(float angle);
 
 };
 
