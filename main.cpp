@@ -1,33 +1,35 @@
 #include "include/Screen.h"
+#include "include/Prism.h"
 #include "iostream"
 
 int main() {
 
     Point3D lb;
     Point3D rt;
-    Prism prism;
+    Prism p1;
+    Polyhedron * prism = &p1;
     Space space;
     Screen screen;
 
     lb.set(4,1.9,1);
     rt.set(6,3.8,3);
-    prism = Prism(lb, rt);
-    space.addPrism(prism);
+    p1 = Prism(lb, rt);
+    space.addPrism(p1);
 
     lb.set(4,-3.8,-1);
     rt.set(6,-2,1);
-    prism = Prism(lb, rt);
-    space.addPrism(prism);
+    p1 = Prism(lb, rt);
+    space.addPrism(p1);
 
     lb.set(4.1,1,-3);
     rt.set(5.9,3,-1);
-    prism = Prism(lb, rt);
-    space.addPrism(prism);
+    p1 = Prism(lb, rt);
+    space.addPrism(p1);
 
     lb.set(3.1,2,-3);
     rt.set(4.1,3,-2);
-    prism = Prism(lb, rt);
-    space.addPrism(prism);
+    p1 = Prism(lb, rt);
+    space.addPrism(p1);
 
     Sphere sphere(Point3D(4,0,0), 1);
 

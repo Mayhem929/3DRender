@@ -9,15 +9,11 @@ Prism::Prism() {
     minB = maxB = p;
 }
 
-
 Prism::Prism(Point3D left_bottom, Point3D right_top){
     minB = left_bottom, maxB = right_top;
 }
 
-char Prism::HitBoundingBox(float origin[NUMDIM],
-                           float dir[NUMDIM],
-                           float coord[NUMDIM])
-{
+char Prism::Intersect(Line3D l, Point3D &coord){
     char inside = TRUE;
     char quadrant[NUMDIM];
     int i;
@@ -28,11 +24,11 @@ char Prism::HitBoundingBox(float origin[NUMDIM],
     /* Find candidate planes; this loop can be avoided if
        rays cast all from the eye(assume perspective view) */
     for (i=0; i<NUMDIM; i++)
-        if(origin[i] < minB[i]) {
+        if(l.getOrig()[i] < minB[i]) {
             quadrant[i] = LEFT;
             candidatePlane[i] = minB[i];
             inside = FALSE;
-        }else if (origin[i] > maxB[i]) {
+        }else if (l.getOrig()[i] > maxB[i]) {
             quadrant[i] = RIGHT;
             candidatePlane[i] = maxB[i];
             inside = FALSE;
@@ -42,15 +38,15 @@ char Prism::HitBoundingBox(float origin[NUMDIM],
 
     /* Ray origin inside bounding box */
     if(inside)	{
-        coord = origin;
+        coord = l.getOrig();
         return (TRUE);
     }
 
 
     /* Calculate T distances to candidate planes */
     for (i = 0; i < NUMDIM; i++)
-        if (quadrant[i] != MIDDLE && dir[i] !=0.)
-            maxT[i] = (candidatePlane[i]-origin[i]) / dir[i];
+        if (quadrant[i] != MIDDLE && l.getDir()[i] !=0.)
+            maxT[i] = (candidatePlane[i]-l.getOrig()[i]) / l.getDir()[i];
         else
             maxT[i] = -1.;
 
@@ -64,7 +60,7 @@ char Prism::HitBoundingBox(float origin[NUMDIM],
     if (maxT[whichPlane] < 0.) return (FALSE);
     for (i = 0; i < NUMDIM; i++)
         if (whichPlane != i) {
-            coord[i] = origin[i] + maxT[whichPlane] *dir[i];
+            coord[i] = l.getOrig()[i] + maxT[whichPlane] *l.getDir()[i];
             if (coord[i] < minB[i] || coord[i] > maxB[i])
                 return (FALSE);
         } else {

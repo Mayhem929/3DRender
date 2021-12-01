@@ -2,34 +2,34 @@
 // Created by Adrián Jaén on 20/11/2021.
 //
 
+#include <utility>
 #include "../include/Space.h"
 
 Space::Space() {
     used = 0;
 }
 
-Space::Space(Prism prism) {
-    prisms[0] = prism;
-    used = 1;
-}
-
-Prism Space::getPrism(int i) {
-    return prisms[i];
-}
-
-int Space::getUsed(){
+int Space::getUsed() const{
     return used;
 };
 
-void Space::setPrism(Prism prism, int i) {
-    prisms[i] = prism;
+Polyhedron Space::operator[](int i) {
+    return *polys[i];
 }
 
-void Space::addPrism(Prism prism) {
-    prisms[used] = prism;
-    ++used;
+Polyhedron Space::getPoly(int i) {
+    return *polys[i];
 }
 
-Prism& Space::operator[](int i) {
-    return prisms[i];
+void Space::addPoly(const Prism& prism) {
+    polys[used] = new Prism(prism);
+}
+
+void Space::addPoly(const Sphere& sphere) {
+    polys[used] = new Sphere(sphere);
+}
+
+Space::~Space() {
+    *polys = nullptr;
+    delete *polys;
 }

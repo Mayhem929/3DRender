@@ -14,19 +14,25 @@ private:
 
 public:
 
+    Vector3D();
+    Vector3D(Point3D p);
+    Vector3D(float, float, float);
+
     float getX() const;
     float getY() const;
     float getZ() const;
 
     void set(Vector3D p);
+
     void setX(float);
     void setY(float);
     void setZ(float);
 
-    Vector3D();
-    Vector3D(float, float, float);
     void normalize();
     void ridZeros();
+    float scalarProd(Vector3D vec);
+    float length();
+    float angle(Vector3D vec);
 
     float& operator[](int i);
     Vector3D operator*(float num);

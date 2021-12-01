@@ -5,22 +5,31 @@
 #ifndef SPACE_H
 #define SPACE_H
 
+#include "Sphere.h"
 #include "Prism.h"
+#include "Polyhedron.h"
+
 
 class Space {
+
 private:
-    Prism prisms[10];
+    Polyhedron *polys[20];
     int used;
+
 public:
     Space();
-    Space(Prism);
 
-    Prism getPrism(int);
-    int getUsed();
-    void setPrism(Prism, int);
-    void addPrism(Prism);
+    Polyhedron getPoly(int i);
 
-    Prism& operator[](int);
+    void addPoly(const Prism& prism);
+    void addPoly(const Sphere& sphere);
+
+    int getUsed() const;
+
+    ~Space();
+
+    Polyhedron operator[](int);
+
 };
 
 

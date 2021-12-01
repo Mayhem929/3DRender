@@ -35,7 +35,11 @@ public:
     void operator+=(Point3D pt);
     void operator-=(Point3D pt);
 
-    float operator[](int i);
+    Point3D operator+(Point3D pt);
+    Point3D operator-(Point3D pt);
+
+    float operator[](int i) const;
+    float& operator[](int i);
 };
 
 #endif //POINT3D_H

@@ -19,6 +19,7 @@ private:
     char matrix[DIM][DIM]{};
     Space space;
     Point3D position{0,0,0};
+    Vector3D light{};
     float screenLen = 2;
     float rotationY = 0;
     float rotationZ = 0;
@@ -26,7 +27,7 @@ public:
 
     Screen();
     Screen(Space space);
-    Screen(Space space, Point3D);
+    Screen(const Space& space, Point3D);
 
     void CleanMatrix();
 
@@ -45,6 +46,7 @@ public:
     void setRotationY(float angle);
     void setRotationZ(float angle);
 
+    void updateScreen(Polyhedron *poly);
 };
 
 #endif // SCREEN_H

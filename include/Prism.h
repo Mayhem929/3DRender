@@ -14,10 +14,10 @@
 #include "Point3D.h"
 #include "Vector3D.h"
 #include "Line3D.h"
+#include "Polyhedron.h"
 #include "cmath"
 
-
-class Prism {
+class Prism: public Polyhedron{
 private:
     Point3D minB, maxB;
 public:
@@ -28,7 +28,7 @@ public:
     Point3D& getLb();
     Point3D& getRt();
 
-    char HitBoundingBox(float origin[NUMDIM],float dir[NUMDIM], float coord[NUMDIM]);
+    char Intersect(Line3D l, Point3D &coord) override;
 };
 
 

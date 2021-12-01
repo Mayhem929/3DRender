@@ -32,7 +32,6 @@ void Screen::CleanMatrix(){
     }
 }
 
-
 void Screen::show() {
 
     system(COMMAND);
@@ -75,12 +74,11 @@ void Screen::updateScreen(Prism prism) {
             Point3D screen_point(position.getX() + 1, y0 + screenLen * j / DIM, z0 + screenLen * i / DIM);
             applyAngle(screen_point);
             Line3D line(position, screen_point);
-            Vector3D direc = line.getDir();
-            float orig[3] = {position[0], position[1], position[2]};
-            float dir[3] = {direc.getX(), direc.getY(), direc.getZ()};
-            float coord[3] = {0};
+            Point3D coord;
 
-            if (prism.HitBoundingBox(orig, dir, coord)) {
+            if (prism.Intersect(line, coord)) {
+
+                // Coloring each face of the prism
 
                 if (coord[0] == prism.getRt().getX())
                     matrix[i][j] = '!';
@@ -99,8 +97,6 @@ void Screen::updateScreen(Prism prism) {
     }
 }
 
-
-
 void Screen::updateScreen(Sphere sphere) {
 
     float x0 = position.getX();
@@ -115,8 +111,35 @@ void Screen::updateScreen(Sphere sphere) {
             float dir[3] = {direc.getX(), direc.getY(), direc.getZ()};
             Point3D coord;
 
-            if (sphere.HitSphere(line, coord)){
+            if (sphere.Intersect(line, coord)){
                 matrix[i][j] = '*';
+            }
+        }
+    }
+}
+
+void Screen::updateScreen(Polyhedron *poly) {
+
+    float x0 = position.getX();
+    float y0 = position.getY() - screenLen / 2.f;
+    float z0 = position.getZ() - screenLen / 2.f;
+
+    for (int i = 0; i < DIM; ++i) {
+        for (int j = 0; j < DIM; ++j) {
+            Line3D line(position, Point3D(position.getX() + 1, y0 + screenLen * j / DIM, z0 + screenLen * i / DIM));
+            Vector3D direc = line.getDir();
+            Point3D coord;
+
+            if (poly->Intersect(line, coord)){
+                matrix[i][j] = '*';
+
+                coord-=poly->getCenterPoint();
+
+                Vector3D dir(coord[0], coord[1], coord[2]);
+
+                float angle = dir.angle(light);
+
+                    
             }
         }
     }
@@ -127,7 +150,7 @@ void Screen::setPos(Point3D p) {
 
 }
 
-Screen::Screen(Space sp, Point3D pos) {
+Screen::Screen(const Space& sp, Point3D pos) {
     space = sp;
     position = pos;
 }

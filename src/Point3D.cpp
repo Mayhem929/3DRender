@@ -46,7 +46,26 @@ void Point3D::operator-=(Point3D pt) {
     p[0]-=pt.p[0], p[1]-=pt.p[1], p[2]-=pt.p[2];
 }
 
-float Point3D::operator[](int i){
+Point3D Point3D::operator+(Point3D pt) {
+
+    Point3D res(p[0]+pt.p[0], p[1]+pt.p[1], p[2]+pt.p[2]);
+
+    return res;
+}
+
+Point3D Point3D::operator-(Point3D pt) {
+
+    Point3D res(p[0]-pt.p[0], p[1]-pt.p[1], p[2]-pt.p[2]);
+
+    return res;
+}
+
+
+float Point3D::operator[](int i) const{
+    return p[i];
+}
+
+float& Point3D::operator[](int i){
     return p[i];
 }
 

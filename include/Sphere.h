@@ -8,8 +8,9 @@
 #include "Point3D.h"
 #include "Vector3D.h"
 #include "Line3D.h"
+#include "Polyhedron.h"
 
-class Sphere {
+class Sphere: public Polyhedron {
 private:
     Point3D center;
     float radius;
