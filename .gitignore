@@ -1,11 +1,3 @@
 cmake-build-debug
 Makefile
-a.exe
-
-Prism.o 
-Line3D.o 
-Point3d.o 
-Screen.o 
-Vector3D.o 
-Space.o 
-Sphere.o
+*.o
