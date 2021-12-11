@@ -29,10 +29,6 @@ Vector3D::Vector3D() {
     v[0]=0, v[1]=0, v[2]=0;
 }
 
-Vector3D::Vector3D(Point3D p) {
-    v[0]=p[0], v[1]=p[1], v[2]=p[2];
-}
-
 Vector3D::Vector3D(float a, float b, float c) {
     v[0] = a, v[1] = b, v[2] = c;
 }
@@ -71,16 +67,16 @@ Vector3D &Vector3D::operator*=(float num) {
     return *this;
 }
 
-float Vector3D::scalarProd(Vector3D vec) {
+float Vector3D::dot(Vector3D vec) {
     return (v[0]*vec[0]+v[1]*vec[1]+v[2]*vec[2]);
 }
 
 float Vector3D::length() {
-    return (std::sqrt(scalarProd(*this)));
+    return (std::sqrt(dot(*this)));
 }
 
 float Vector3D::angle(Vector3D vec) {
-    return std::acos( (scalarProd(vec)) / length()*vec.length());
+    return std::acos((dot(vec)) / (length() * vec.length()))*180./3.141592f;
 }
 
 

@@ -4,6 +4,6 @@
 
 #include "../include/Polyhedron.h"
 
-char Polyhedron::Intersect(Line3D l, Point3D &coord) {
+bool Polyhedron::Intersect(Line3D l, Point3D &coord) {
     return 0;
 }

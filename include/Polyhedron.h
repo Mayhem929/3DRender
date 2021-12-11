@@ -5,6 +5,7 @@
 #ifndef INC_3DBOX_POLYHEDRON_H
 #define INC_3DBOX_POLYHEDRON_H
 
+#include "string"
 #include "Point3D.h"
 #include "Line3D.h"
 
@@ -18,10 +19,11 @@ public:
     }
 
     virtual Point3D getCenterPoint(){
-        return Point3D();
+        return centerPoint;
     }
 
-    virtual char Intersect(Line3D l, Point3D &coord);
+    virtual bool Intersect(Line3D l, Point3D &coord);
+    virtual std::string to_string(){return "";}
 };
 
 

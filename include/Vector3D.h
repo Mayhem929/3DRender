@@ -15,7 +15,6 @@ private:
 public:
 
     Vector3D();
-    Vector3D(Point3D p);
     Vector3D(float, float, float);
 
     float getX() const;
@@ -30,7 +29,7 @@ public:
 
     void normalize();
     void ridZeros();
-    float scalarProd(Vector3D vec);
+    float dot(Vector3D vec);
     float length();
     float angle(Vector3D vec);
 

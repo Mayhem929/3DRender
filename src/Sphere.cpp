@@ -36,7 +36,11 @@ template <class T> float mod_squared(T d){
     return (d[0]*d[0] + d[1]*d[1] + d[2]*d[2]);
 }
 
-bool Sphere::HitSphere(Line3D line, Point3D& f_intersect) {
+Point3D Sphere::getCenterPoint() {
+    return center;
+}
+
+bool Sphere::Intersect(Line3D line, Point3D& f_intersect) {
 
     double A = 0, B = 0, C = 0;
 
@@ -77,4 +81,11 @@ bool Sphere::HitSphere(Line3D line, Point3D& f_intersect) {
     f_intersect = first_intersect;
 
     return true;
+}
+
+std::string Sphere::to_string() {
+    std::string out = "";
+    out += "Sphere: " + center.to_string() + "\n"
+           + "Radius: " + std::to_string(radius);
+    return out;
 }

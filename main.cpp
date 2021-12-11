@@ -2,9 +2,29 @@
 #include "include/Prism.h"
 #include "iostream"
 
+using namespace std;
+
 int main() {
 
-    Point3D lb;
+    Space space;
+
+    Prism p1(Point3D(4,1.9,1), Point3D(6,3.8,3));
+    space.addPoly(p1);
+
+    Prism p2(Point3D(4,-3.8,-1), Point3D(6,-2,1));
+    space.addPoly(p2);
+
+    Prism p3(Point3D(4.1,1,-3), Point3D(5.9,3,-1));
+    space.addPoly(p3);
+
+    Prism p4(Point3D(3.1,2,-3), Point3D(4.1,3,-2));
+    space.addPoly(p4);
+
+    cout << space.to_string() << endl << endl;
+    space.insertionSort(Point3D(5,-5,0));
+    cout << space.to_string();
+
+    /*Point3D lb;
     Point3D rt;
     Prism p1;
     Polyhedron * prism = &p1;
@@ -99,7 +119,7 @@ int main() {
             go_on = false;
         }
 
-    }
+    }*/
 
     return 0;
 }

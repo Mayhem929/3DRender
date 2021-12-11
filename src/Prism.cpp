@@ -13,7 +13,7 @@ Prism::Prism(Point3D left_bottom, Point3D right_top){
     minB = left_bottom, maxB = right_top;
 }
 
-char Prism::Intersect(Line3D l, Point3D &coord){
+bool Prism::Intersect(Line3D l, Point3D &coord){
     char inside = TRUE;
     char quadrant[NUMDIM];
     int i;
@@ -41,7 +41,6 @@ char Prism::Intersect(Line3D l, Point3D &coord){
         coord = l.getOrig();
         return (TRUE);
     }
-
 
     /* Calculate T distances to candidate planes */
     for (i = 0; i < NUMDIM; i++)
@@ -75,4 +74,16 @@ Point3D& Prism::getLb() {
 
 Point3D& Prism::getRt() {
     return maxB;
+}
+
+Point3D Prism::getCenterPoint() {
+    auto out = (minB + maxB) * (1 / 2.);
+    return out;
+}
+
+std::string Prism::to_string() {
+    std::string out = "";
+    out += "Cube: " + minB.to_string() + ", " +maxB.to_string() + "\n"
+            + "Midpoint: " + getCenterPoint().to_string();
+    return out;
 }

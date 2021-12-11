@@ -6,6 +6,7 @@
 #define POINT3D_H
 
 #include "Vector3D.h"
+#include "string"
 
 class Point3D {
 private:
@@ -37,9 +38,12 @@ public:
 
     Point3D operator+(Point3D pt);
     Point3D operator-(Point3D pt);
+    Point3D operator*(float n);
 
     float operator[](int i) const;
     float& operator[](int i);
+
+    std::string to_string();
 };
 
 #endif //POINT3D_H

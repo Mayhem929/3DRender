@@ -25,8 +25,9 @@ public:
     void setCenter(Point3D);
     void setRadius(float);
 
-    bool HitSphere(Line3D, Point3D&);
-
+    Point3D getCenterPoint() override;
+    bool Intersect(Line3D line, Point3D& f_intersect) override;
+    std::string to_string() override;
 };
 
 

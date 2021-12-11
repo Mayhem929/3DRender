@@ -13,7 +13,7 @@
 class Space {
 
 private:
-    Polyhedron *polys[20];
+    Polyhedron *polys[20]{};
     int used;
 
 public:
@@ -30,6 +30,9 @@ public:
 
     Polyhedron operator[](int);
 
+    void insertionSort(Point3D pos);
+
+    std::string to_string();
 };
 
 

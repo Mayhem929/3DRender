@@ -131,7 +131,7 @@ void Screen::updateScreen(Polyhedron *poly) {
             Point3D coord;
 
             if (poly->Intersect(line, coord)){
-                matrix[i][j] = '*';
+                // matrix[i][j] = '*';
 
                 coord-=poly->getCenterPoint();
 
@@ -139,15 +139,22 @@ void Screen::updateScreen(Polyhedron *poly) {
 
                 float angle = dir.angle(light);
 
-                    
+                char light_scale[] = {',','-','/','i','o','D','0','*'};
+
+                for(int k = 0; k < 8; ++k){
+                    if(angle > (180.f/8) * k && angle <= (180.f/8)*(k+1))
+                        matrix[i][j] = light_scale[k];
+                }
+
+
             }
         }
     }
 }
 
+
 void Screen::setPos(Point3D p) {
     position = p;
-
 }
 
 Screen::Screen(const Space& sp, Point3D pos) {
@@ -159,6 +166,7 @@ Screen::Screen(Space sp) {
     space = sp;
 }
 
+/*
 void Screen::updateScreen(Space sp) {
     CleanMatrix();
     space = sp;
@@ -166,11 +174,12 @@ void Screen::updateScreen(Space sp) {
         updateScreen(space[i]);
     }
 }
+*/
+
 
 float Screen::getRotationY(){
     return rotationY;
 }
-
 
 float Screen::getRotationZ(){
     return rotationZ;

@@ -2,6 +2,7 @@
 // Created by Adrián Jaén on 20/11/2021.
 
 #include "../include/Point3D.h"
+#include "string"
 #include "cmath"
 
 Point3D::Point3D(float a, float b, float c) {
@@ -60,6 +61,13 @@ Point3D Point3D::operator-(Point3D pt) {
     return res;
 }
 
+Point3D Point3D::operator*(float n) {
+
+    Point3D res(p[0]*n, p[1]*n, p[2]*n);
+
+    return res;
+}
+
 
 float Point3D::operator[](int i) const{
     return p[i];
@@ -67,6 +75,14 @@ float Point3D::operator[](int i) const{
 
 float& Point3D::operator[](int i){
     return p[i];
+}
+
+std::string Point3D::to_string() {
+    std::string out = "";
+    out += "(" + std::to_string(p[0]) +
+           " " + std::to_string(p[1]) +
+           " " + std::to_string(p[2]) + ")";
+    return out;
 }
 
 
