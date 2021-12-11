@@ -11,15 +11,10 @@
 
 class Polyhedron {
 protected:
-    Point3D centerPoint;
 public:
 
-    Polyhedron(){
-        centerPoint = Point3D();
-    }
-
     virtual Point3D getCenterPoint(){
-        return centerPoint;
+        return {};
     }
 
     virtual bool Intersect(Line3D l, Point3D &coord);

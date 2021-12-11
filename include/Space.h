@@ -28,9 +28,9 @@ public:
 
     ~Space();
 
-    Polyhedron operator[](int);
+    Polyhedron* operator[](int);
 
-    void insertionSort(Point3D pos);
+    void insertionSortR(Point3D pos);
 
     std::string to_string();
 };

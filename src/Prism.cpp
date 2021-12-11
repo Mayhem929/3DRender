@@ -83,7 +83,7 @@ Point3D Prism::getCenterPoint() {
 
 std::string Prism::to_string() {
     std::string out = "";
-    out += "Cube: " + minB.to_string() + ", " +maxB.to_string() + "\n"
+    out += "Prism: " + minB.to_string() + ", " +maxB.to_string() + "\n"
             + "Midpoint: " + getCenterPoint().to_string();
     return out;
 }

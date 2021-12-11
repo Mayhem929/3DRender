@@ -13,8 +13,8 @@ int Space::getUsed() const{
     return used;
 };
 
-Polyhedron Space::operator[](int i) {
-    return *polys[i];
+Polyhedron* Space::operator[](int i) {
+    return polys[i];
 }
 
 Polyhedron Space::getPoly(int i) {
@@ -36,12 +36,12 @@ Space::~Space() {
     delete *polys;
 }
 
-void Space::insertionSort(Point3D pos){
+void Space::insertionSortR(Point3D pos){
     int i, j;
     for (i = 1; i < used; i++) {
         Polyhedron *element = polys[i];
         j = i - 1;
-        while (j >= 0 && polys[j]->getCenterPoint().dist(pos) > element->getCenterPoint().dist(pos)) {
+        while (j >= 0 && polys[j]->getCenterPoint().dist(pos) <= element->getCenterPoint().dist(pos)) {
             polys[j + 1] = polys[j];
             j--;
         }

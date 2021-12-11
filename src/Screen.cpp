@@ -53,7 +53,17 @@ void Screen::show() {
 
 }
 
-void Screen::applyAngle(Point3D &p){
+void Screen::applyAngleOrig(Point3D &p) const{
+    p.set(p[0]*cos(rotationY) - p[1]*sin(rotationY),
+          p[0]*sin(rotationY) + p[1]*cos(rotationY),
+          p[2]);
+
+    p.set(p[0]*cos(rotationZ) - p[2]*sin(rotationZ),
+          p[1],
+          p[0]*sin(rotationZ) + p[2]*cos(rotationZ));
+}
+
+void Screen::applyAnglePos(Point3D &p){
     p.set(position[0] + (p[0]-position[0])*cos(rotationY) - (p[1]-position[1])*sin(rotationY),
           position[1] + (p[0]-position[0])*sin(rotationY) + (p[1]-position[1])*cos(rotationY),
           p[2]);
@@ -72,7 +82,7 @@ void Screen::updateScreen(Prism prism) {
     for (int i = 0; i < DIM; ++i) {
         for (int j = 0; j < DIM; ++j) {
             Point3D screen_point(position.getX() + 1, y0 + screenLen * j / DIM, z0 + screenLen * i / DIM);
-            applyAngle(screen_point);
+            applyAnglePos(screen_point);
             Line3D line(position, screen_point);
             Point3D coord;
 
@@ -120,18 +130,17 @@ void Screen::updateScreen(Sphere sphere) {
 
 void Screen::updateScreen(Polyhedron *poly) {
 
-    float x0 = position.getX();
     float y0 = position.getY() - screenLen / 2.f;
     float z0 = position.getZ() - screenLen / 2.f;
 
     for (int i = 0; i < DIM; ++i) {
         for (int j = 0; j < DIM; ++j) {
-            Line3D line(position, Point3D(position.getX() + 1, y0 + screenLen * j / DIM, z0 + screenLen * i / DIM));
-            Vector3D direc = line.getDir();
+            Point3D screen_point(position.getX() + 1, y0 + screenLen * j / DIM, z0 + screenLen * i / DIM);
+            applyAnglePos(screen_point);
+            Line3D line(position, screen_point);
             Point3D coord;
 
             if (poly->Intersect(line, coord)){
-                // matrix[i][j] = '*';
 
                 coord-=poly->getCenterPoint();
 
@@ -139,10 +148,10 @@ void Screen::updateScreen(Polyhedron *poly) {
 
                 float angle = dir.angle(light);
 
-                char light_scale[] = {',','-','/','i','o','D','0','*'};
-
-                for(int k = 0; k < 8; ++k){
-                    if(angle > (180.f/8) * k && angle <= (180.f/8)*(k+1))
+                char light_scale[] = {'-','\'','\"','o','*','D','0'};
+                int used = 7;
+                for(int k = 0; k < used; ++k){
+                    if(angle > (180.f/used) * k && angle <= (180.f/used)*(k+1))
                         matrix[i][j] = light_scale[k];
                 }
 
@@ -152,6 +161,13 @@ void Screen::updateScreen(Polyhedron *poly) {
     }
 }
 
+void Screen::updateScreen() {
+    CleanMatrix();
+    space.insertionSortR(position);
+    for (int i = 0; i < space.getUsed(); ++i) {
+        updateScreen(space[i]);
+    }
+}
 
 void Screen::setPos(Point3D p) {
     position = p;
@@ -162,19 +178,9 @@ Screen::Screen(const Space& sp, Point3D pos) {
     position = pos;
 }
 
-Screen::Screen(Space sp) {
+Screen::Screen(const Space& sp) {
     space = sp;
 }
-
-/*
-void Screen::updateScreen(Space sp) {
-    CleanMatrix();
-    space = sp;
-    for (int i = 0; i < space.getUsed(); ++i) {
-        updateScreen(space[i]);
-    }
-}
-*/
 
 
 float Screen::getRotationY(){

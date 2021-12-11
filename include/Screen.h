@@ -26,7 +26,7 @@ private:
 public:
 
     Screen();
-    Screen(Space space);
+    Screen(const Space& space);
     Screen(const Space& space, Point3D);
 
     void CleanMatrix();
@@ -34,17 +34,17 @@ public:
 
     void updateScreen(Prism);
     void updateScreen(Sphere);
-//    void updateScreen(Space);
     void updateScreen(Polyhedron *poly);
+    void updateScreen();
 
     void show();
 
-    void applyAngle(Point3D &p);
+    void applyAngleOrig(Point3D &p) const;
+    void applyAnglePos(Point3D &p);
     float getRotationY();
 
     float getRotationZ();
     void setRotationY(float angle);
-
     void setRotationZ(float angle);
 };
 

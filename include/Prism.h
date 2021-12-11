@@ -29,7 +29,6 @@ public:
     Point3D& getRt();
 
     Point3D getCenterPoint() override;
-
     bool Intersect(Line3D l, Point3D &coord) override;
     std::string to_string();
 };

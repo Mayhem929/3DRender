@@ -20,106 +20,129 @@ int main() {
     Prism p4(Point3D(3.1,2,-3), Point3D(4.1,3,-2));
     space.addPoly(p4);
 
-    cout << space.to_string() << endl << endl;
-    space.insertionSort(Point3D(5,-5,0));
-    cout << space.to_string();
+    Sphere s1(Point3D(6,0,0), 1);
+    space.addPoly(s1);
 
-    /*Point3D lb;
-    Point3D rt;
-    Prism p1;
-    Polyhedron * prism = &p1;
-    Space space;
-    Screen screen;
+    Sphere s2(Point3D(5,6,-2), 1.5);
+    space.addPoly(s2);
 
-    lb.set(4,1.9,1);
-    rt.set(6,3.8,3);
-    p1 = Prism(lb, rt);
-    space.addPrism(p1);
+    Sphere s3(Point3D(6,-3, 4),2);
+    space.addPoly(s3);
 
-    lb.set(4,-3.8,-1);
-    rt.set(6,-2,1);
-    p1 = Prism(lb, rt);
-    space.addPrism(p1);
-
-    lb.set(4.1,1,-3);
-    rt.set(5.9,3,-1);
-    p1 = Prism(lb, rt);
-    space.addPrism(p1);
-
-    lb.set(3.1,2,-3);
-    rt.set(4.1,3,-2);
-    p1 = Prism(lb, rt);
-    space.addPrism(p1);
-
+    /*
     Sphere sphere(Point3D(4,0,0), 1);
 
     screen.updateScreen(space);
     screen.updateScreen(sphere);
     screen.show();
 
+    */
 
-    bool go_on = true;
-
+    Screen screen(space);
+    auto a = space[0]->getCenterPoint();
+    screen.updateScreen();
+    screen.show();
     Point3D pos(0,0,0);
 
+    bool go_on = true;
     while(go_on){
 
         char option;
         std::cin >> option;
 
         if (option == 'a'){
-            pos.setY(pos.getY()+1);
+            Point3D p(0,1,0);
+            screen.applyAngleOrig(p);
+            pos = pos+p;
             screen.setPos(pos);
-            screen.updateScreen(space);
-            screen.updateScreen(sphere);
+            screen.updateScreen();
             screen.show();
         }
 
         if (option == 's'){
-            pos.setX(pos.getX()-1);
+            Point3D p(-1,0,0);
+            screen.applyAngleOrig(p);
+            pos = pos+p;
             screen.setPos(pos);
-            screen.updateScreen(space);
-            screen.updateScreen(sphere);
+            screen.updateScreen();
             screen.show();
         }
 
         if (option == 'd'){
-            pos.setY(pos.getY()-1);
+            Point3D p(0,-1,0);
+            screen.applyAngleOrig(p);
+            pos = pos+p;
             screen.setPos(pos);
-            screen.updateScreen(space);
-            screen.updateScreen(sphere);
+            screen.updateScreen();
             screen.show();
         }
 
         if (option == 'w'){
-            pos.setX(pos.getX()+1);
+            Point3D p(1,0,0);
+            screen.applyAngleOrig(p);
+            pos = pos+p;
             screen.setPos(pos);
-            screen.updateScreen(space);
-            screen.updateScreen(sphere);
+            screen.updateScreen();
             screen.show();
         }
 
         if (option == 'f'){
             pos.setZ(pos.getZ()+1);
             screen.setPos(pos);
-            screen.updateScreen(space);
-            screen.updateScreen(sphere);
+            screen.updateScreen();
             screen.show();
         }
 
         if (option == 'c'){
             pos.setZ(pos.getZ()-1);
             screen.setPos(pos);
-            screen.updateScreen(space);
-            screen.updateScreen(sphere);
+            screen.updateScreen();
             screen.show();
         }
+
+        if (option == 'r'){
+            pos.set(0,0,0);
+            screen.setPos(pos);
+            screen.setRotationY(0);
+            screen.setRotationZ(0);
+            screen.updateScreen();
+            screen.show();
+        }
+
+        if (option == '8'){
+            screen.setRotationZ(screen.getRotationZ()+PI/16);
+            screen.setPos(pos);
+            screen.updateScreen();
+            screen.show();
+        }
+
+        if (option == '5'){
+            screen.setRotationZ(screen.getRotationZ()-PI/16);
+            screen.setPos(pos);
+            screen.updateScreen();
+            screen.show();
+        }
+
+        if (option == '4'){
+            screen.setRotationY(screen.getRotationY()+PI/16);
+            screen.setPos(pos);
+            screen.updateScreen();
+            screen.show();
+        }
+
+        if (option == '6'){
+            screen.setRotationY(screen.getRotationY()-PI/16);
+            screen.setPos(pos);
+            screen.updateScreen();
+            screen.show();
+        }
+
 
         if(option == 'q'){
             go_on = false;
         }
 
-    }*/
+    }
 
     return 0;
 }
