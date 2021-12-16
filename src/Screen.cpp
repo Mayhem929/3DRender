@@ -36,7 +36,7 @@ void Screen::show() {
 
     system(COMMAND);
 
-    string output = "";
+    string output;
 
     for (int i = DIM-1; i >= 0; --i) {
         for (int j = DIM-1; j >= 0; --j) {
@@ -154,8 +154,6 @@ void Screen::updateScreen(Polyhedron *poly) {
                     if(angle > (180.f/used) * k && angle <= (180.f/used)*(k+1))
                         matrix[i][j] = light_scale[k];
                 }
-
-
             }
         }
     }
@@ -167,6 +165,7 @@ void Screen::updateScreen() {
     for (int i = 0; i < space.getUsed(); ++i) {
         updateScreen(space[i]);
     }
+    show();
 }
 
 void Screen::setPos(Point3D p) {

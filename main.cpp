@@ -29,19 +29,8 @@ int main() {
     Sphere s3(Point3D(6,-3, 4),2);
     space.addPoly(s3);
 
-    /*
-    Sphere sphere(Point3D(4,0,0), 1);
-
-    screen.updateScreen(space);
-    screen.updateScreen(sphere);
-    screen.show();
-
-    */
-
     Screen screen(space);
-    auto a = space[0]->getCenterPoint();
     screen.updateScreen();
-    screen.show();
     Point3D pos(0,0,0);
 
     bool go_on = true;
@@ -56,7 +45,6 @@ int main() {
             pos = pos+p;
             screen.setPos(pos);
             screen.updateScreen();
-            screen.show();
         }
 
         if (option == 's'){
@@ -65,7 +53,6 @@ int main() {
             pos = pos+p;
             screen.setPos(pos);
             screen.updateScreen();
-            screen.show();
         }
 
         if (option == 'd'){
@@ -74,7 +61,6 @@ int main() {
             pos = pos+p;
             screen.setPos(pos);
             screen.updateScreen();
-            screen.show();
         }
 
         if (option == 'w'){
@@ -83,21 +69,18 @@ int main() {
             pos = pos+p;
             screen.setPos(pos);
             screen.updateScreen();
-            screen.show();
         }
 
         if (option == 'f'){
             pos.setZ(pos.getZ()+1);
             screen.setPos(pos);
             screen.updateScreen();
-            screen.show();
         }
 
         if (option == 'c'){
             pos.setZ(pos.getZ()-1);
             screen.setPos(pos);
             screen.updateScreen();
-            screen.show();
         }
 
         if (option == 'r'){
