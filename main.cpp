@@ -99,7 +99,7 @@ int main() {
             screen.show();
         }
 
-        if (option == '5'){
+        if (option == '2'){
             screen.setRotationZ(screen.getRotationZ()-PI/16);
             screen.setPos(pos);
             screen.updateScreen();
