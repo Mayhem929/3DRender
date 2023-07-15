@@ -13,7 +13,7 @@
 class Space {
 
 private:
-    Polyhedron *polys[20]{};
+    Polyhedron *polys[100]{};
     int used;
 
 public:
